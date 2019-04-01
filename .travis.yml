@@ -1,0 +1,13 @@
+---
+language: bash
+
+services:
+  - docker
+
+before_install:
+  - "docker run --privileged -u root -w /root archlinux/base /bin/sh -c '
+  pacman --noconfirm -Sy;
+  pacman --noconfirm -S sudo multipath-tools e2fsprogs wget parted dosfstools git;
+  git clone https://github.com/blackthrow/archlinux-mkimage && cd archlinux-mkimage/;
+  ./scripts/mkimage.sh aarch64 && ./scripts/mkimage.sh armv7;
+  '"
