@@ -18,3 +18,15 @@ script: "docker run --privileged -u root -w /root -v ${TRAVIS_BUILD_DIR}:/root/s
   ./scripts/getimage.sh ${ARCH} ${TARBALL_OUT} && ./scripts/mkimage.sh ${TARBALL_OUT} /root/src/${IMAGE_OUT};
   \""
 
+deploy:
+  provider: releases
+  overwrite: true
+  skip_cleanup: true
+  api_key:
+    secure: "dCxlPgUl3hPBa5nFlPxWusHq7NgENdD4LMxBINU2T+UWOp4iE1VWHojegBOKzHfvi6aaevhQIgvD7fxKW9H/Mox2caagEihisNM8juZlRYUIcv95QvF1OYvOWDl2GPb8vFFIUw0vo00ZoVso4IKztNGQS4l0W/pngIvdoN2oRWg8Wc5anXvbElWU3E8PUfZK1EzQNaJXg4vAOK8BblMMzdI65pR84OmgpcJsUXZdW72mqqCplns2np02V2go3muI4g6nGmyw/tnibVrfRkC1PZZRwNVjfTRDnH8Gr9Ck3bAcef14xt8XXMPOBIttAE3JZRb5DrF72ytHQ1TYnvDv+XSLy6EiKly8x5SvnUto98rw3OgJw3eoa4v94eyBAfd+2vdGx3CclwQ1PQndk0Pnq9ILfqbFpKfLyIpabYnbvbiKCY01oWkexVlbkG6y7PpaBGgFWM2kircxs9EDLhFCUgbZ6flSf0vD3i2fXwTEeS1UbBzBrYFV+oyvFHi+BfXJARC605qIYK7VpFDXXrLBFv6of1R1HfO7rnDLCJSWf6hajuiJnWReALF966ly7DrljyHQtWXsLPuYyIpktVQww2AhzI3HtyJk0isfry226C2y5W7vLUJv6zGGXBBvl9Fqd9UikIOQSFKvvCtj4noXHw6dLu7cQZFuuqomb94CVe8="
+  file:
+    - ${TRAVIS_BUILD_DIR}/${IMAGE_OUT}
+  on:
+    repo: blackthrow/archlinux-mkimage
+    tags: false
+
