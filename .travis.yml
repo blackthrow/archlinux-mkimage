@@ -13,8 +13,8 @@ matrix:
 
 script: "docker run --privileged -u root -w /root -v ${TRAVIS_BUILD_DIR}:/root/src archlinux/base /bin/sh -c '
   pacman --noconfirm -Sy;
-  pacman --noconfirm -S sudo multipath-tools e2fsprogs wget parted dosfstools git;
-  cd src/ && ls -l src/;
+  pacman --noconfirm -S sudo multipath-tools e2fsprogs wget parted dosfstools;
+  cd src/;
   ./scripts/getimage.sh ${ARCH} ${TARBALL_OUT} && ./scripts/mkimage.sh ${TARBALL_OUT};
   '"
 
