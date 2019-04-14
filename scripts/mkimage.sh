@@ -85,8 +85,8 @@ atexit () {
 SIZE=3400 # MB
 STAGING_DIR="`mktemp -d`"
 
-if [ $# -lt 1 ]; then
-	echo "Usage: $0 <tarball>"
+if [ $# -lt 2 ]; then
+	echo "Usage: $0 <tarball> <output>"
 	echo
 	echo "Create a bootable image from Arch Linux ARM tarball."
 	exit 1
@@ -95,7 +95,7 @@ fi
 trap atexit EXIT
 
 tarball="$1"
-disk="blackthrow-$arch-`date +%Y%m%d`.img"
+disk="$2"
 
 progress "Creating a sparse file..."
 touch_sparse "$disk" "$SIZE"
@@ -170,7 +170,7 @@ progress "Compress image..."
 compress_file "$disk"
 [ $? -eq 0 ] || exit 1
 
-progress "DONE: $disk.gz"
+progress "DONE: $disk"
 
 exit 0
 
