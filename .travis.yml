@@ -4,10 +4,17 @@ language: bash
 services:
   - docker
 
-before_install:
-  - "docker run --privileged -u root -w /root archlinux/base /bin/sh -c '
+matrix:
+  include:
+    - name: Build image aarch64
+      env: ARCH=aarch64 TARBALL_OUT=latest.tar.gz
+    - name: Build image armv7
+      env: ARCH=armv7 TARBALL_OUT=latest.tar.gz
+
+script: "docker run --privileged -u root -w /root archlinux/base /bin/sh -c '
   pacman --noconfirm -Sy;
   pacman --noconfirm -S sudo multipath-tools e2fsprogs wget parted dosfstools git;
   git clone https://github.com/blackthrow/archlinux-mkimage && cd archlinux-mkimage/;
-  ./scripts/mkimage.sh aarch64 && ./scripts/mkimage.sh armv7;
+  ./scripts/getimage.sh ${ARCH} ${TARBALL_OUT} && ./scripts/mkimage.sh ${TARBALL_OUT};
   '"
+
