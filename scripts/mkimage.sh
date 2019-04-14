@@ -77,6 +77,11 @@ wget_resource () {
 	wget "$1" -O "$2"
 }
 
+# file
+compress_file () {
+	gzip -8 "$1"
+}
+
 rpi_tarball () {
 	if [ "$1" == "armv7" ]; then
 		echo "http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-2-latest.tar.gz"
@@ -92,7 +97,7 @@ atexit () {
 	[ -z "$mnt_boot" ] || umount_fs "$mnt_boot"
 }
 
-SIZE=2048 # MB
+SIZE=4096 # MB
 STAGING_DIR="`mktemp -d`"
 
 if [ $# -lt 1 ]; then
@@ -184,7 +189,11 @@ progress "Unmapping partitions..."
 delete_mapping "$disk"
 [ $? -eq 0 ] || exit 1
 
-progress "DONE: $disk"
+progress "Compress image..."
+compress_file "$disk"
+[ $? -eq 0 ] || exit 1
+
+progress "DONE: $disk.gz"
 
 exit 0
 
