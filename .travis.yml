@@ -28,5 +28,5 @@ deploy:
     - ${TRAVIS_BUILD_DIR}/${IMAGE_OUT}
   on:
     repo: blackthrow/archlinux-mkimage
-    tags: false
+    branch: master
 
