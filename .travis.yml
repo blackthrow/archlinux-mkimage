@@ -11,10 +11,10 @@ matrix:
     - name: Build image armv7
       env: ARCH=armv7 TARBALL_OUT=latest.tar.gz
 
-script: "echo arch=${ARCH}; docker run --privileged -u root -w /root -v ${TRAVIS_BUILD_DIR}:/root/src archlinux/base /bin/sh -c '
+script: "docker run --privileged -u root -w /root -v ${TRAVIS_BUILD_DIR}:/root/src archlinux/base /bin/sh -c \"
   pacman --noconfirm -Sy;
   pacman --noconfirm -S sudo multipath-tools e2fsprogs wget parted dosfstools;
   cd src/;
   ./scripts/getimage.sh ${ARCH} ${TARBALL_OUT} && ./scripts/mkimage.sh ${TARBALL_OUT};
-  '"
+  \""
 
